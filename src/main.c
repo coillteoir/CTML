@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 		return 1;
 	}
 
-	int errno = compile(input,output);	
+	compile(input,output);	
 
 	return 0;
 }
