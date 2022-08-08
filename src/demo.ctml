@@ -1,0 +1,24 @@
+(html) 
+{ 
+	(head)
+	{	
+		(title)
+		{
+			CTML DEMO
+		}
+	}
+	(header) 
+	{
+		(h1 style="color:red;")
+		{
+			WOOOOO!!!!
+		}
+	}
+	(body)
+	{
+		(div)
+		{
+			(p){Hello World}
+		}
+	}
+}
