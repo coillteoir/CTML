@@ -1,5 +1,4 @@
-
-CC=gcc
+CC=cc
 OUT=hello.html
 
 compile:
@@ -16,6 +15,5 @@ test:
 	firefox $(OUT) &
 
 install:
-	$(CC) -o bin/ctml src/main.c 
-	mv ./bin/ctml /usr/bin/ctml
+	$(CC) -o /usr/bin/ctml src/main.c 
 

@@ -11,14 +11,15 @@
 	{
 		(h1 style="color:red;")
 		{
-			WOOOOO!!!!
+			WOOOOO!!!!\(\)\(\)
 		}
 	}
 	(body)
 	{
 		(div)
 		{
-			(p){Hello World}
+			(p){Hello\{\}World}
+			(p){Goodbye World}
 		}
 	}
 }

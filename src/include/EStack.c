@@ -22,7 +22,15 @@ void EPop(EStack * s, FILE * output)
 
 	if(s->size >= 0)
 	{
-		fprintf(output,"</%s>\n",*(s->elms + s->size));
+		fprintf(output, "</");
+		
+		char *tag = *(s->elms + s->size);
+
+		for(int i = 0; *(tag + i) > 32; i++)
+		{
+			fprintf(output, "%c", *(tag + i));
+		}
+		fprintf(output, ">\n");
 		free(*(s->elms + s->size));
 		s->size--;
 	}

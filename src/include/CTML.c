@@ -8,11 +8,14 @@ void noSpace(char * s, int * len)
 	char * d = s;
 
 	unsigned char isText = 0;
-
+	unsigned char ignore = 0;
 	int spaces = 0;
 
 	do
 	{
+		if(*d == '\\')
+			ignore = 1;
+
 		if(*(d - 1) == '(')
 		{	
 			isText = 1;
@@ -36,6 +39,7 @@ void noSpace(char * s, int * len)
 			++d;
 			++spaces;
 		}
+		ignore = 0;
 	}
 	while(*s++ = *d++);
 	
@@ -145,23 +149,29 @@ int compile(FILE * input, FILE * output)
 	{		
 		static int open = 0;
 		static unsigned char inTag = 0;
+		static unsigned char ignore = 0;
 		static int close = 0;
+	
 
-		if(*(srcText + i) == '(')
+		if(*(srcText + i) == '\\')
+			ignore = 1;
+
+
+		if(*(srcText + i) == '(' && ignore == 0)
 		{
 			open = i;
 			inTag = 1;
 		}
-		else if(*(srcText + i) == ')')
+		else if(*(srcText + i) == ')' && ignore == 0)
 		{
 			close = i;
 			inTag = 0;
 		}
-		else if(*(srcText + i) == '{') //if open curly brace is detected then there is a push to the stack
+		else if(*(srcText + i) == '{'&& ignore == 0) //if open curly brace is detected then there is a push to the stack
 		{
 			EPush(&s1, exTag(srcText,open,close),output);	
 		}
-		else if(*(srcText + i) == '}')//if a closed curly brace is detected then there is a pop from the stack
+		else if(*(srcText + i) == '}' && ignore == 0)//if a closed curly brace is detected then there is a pop from the stack
 		{
 			EPop(&s1, output);
 		}
@@ -169,10 +179,19 @@ int compile(FILE * input, FILE * output)
 		{
 			if(inTag == 0)
 			{
-				fprintf(output,"%c",*(srcText + i)); 
+				if(*(srcText + i) == '\\' && ignore)
+					(void)0; //this acts like python's pass 	
+				else
+					fprintf(output,"%c",*(srcText + i)); 
+							
+				if(ignore && (*(srcText + i) == '{' || *(srcText + i) == '}' ||*(srcText + i) == '(' || *(srcText + i) ==  ')'))
+					ignore = 0;
 			}
 		}
+
 	}
+
+	free(srcText);
 }	
 
 #endif
