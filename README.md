@@ -1,6 +1,6 @@
 # CTML v0.1
 
-**CTML** is a markdown language designed with the intention of simplifying the process of designing websites. CTML serves as an alternative to HTML, allowing users to generate HTML thanks to the CTML compiler.<br>
+**CTML** is a markdown language designed with the intention of simplifying the process of designing websites. CTML serves as an alternative to HTML, allowing users to generate HTML with the CTML compiler.<br>
 The current implementation of the CTML compiler is written in **C** in order to provide developers with rapid compile times allowing for easy and efficient testing and debugging.<br>
 
 
