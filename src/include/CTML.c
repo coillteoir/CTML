@@ -1,7 +1,7 @@
 #ifndef _CTML_C
 #define _CTML_C
 
-#include "EStack.c"
+#include "EStack.h"
 
 void noSpace(char * s, int * len)
 {

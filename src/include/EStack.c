@@ -1,7 +1,12 @@
 #ifndef _ESTACK_C 
 #define _ESTACK_C
 
-#include "EStack.h"
+typedef struct
+{
+	int max;
+	int size;
+	char **elms;
+}EStack;
 
 void EPush(EStack * s, char * tag, FILE * output)
 {

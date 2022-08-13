@@ -4,6 +4,7 @@
 
 #include "include/CTML.h"
 #include "include/EStack.h"
+#include "include/Errors.h"
 
 int main(int argc, char **argv)
 {
