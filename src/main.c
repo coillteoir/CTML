@@ -8,7 +8,7 @@
 
 int main(int argc, char **argv)
 {
-	if(strcmp(argv[1], " --version") == 0)
+	if(strcmp(argv[1], "--version") == 0)
 	{
 		puts("CTML v0.01\nCopyright (C) David Lynch 2022");
 		return 0;
