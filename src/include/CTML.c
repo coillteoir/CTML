@@ -1,5 +1,5 @@
 #ifndef _CTML_C
-#define _CTML_C
+#define _CTML_C 1
 
 #include "EStack.h"
 
