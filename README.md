@@ -67,7 +67,7 @@ TBD
 2. Add a new path to CTML executable in `C:/User/.../CTML/bin/` to your Path system variable
    <details>
 	 	<summary>How to add a new path to Path system variable</summary>
-		
+
    	- In windows search, search for `Edit the system environment variables` and open it to enter the System Properties in the Advanced tab
    	- Open Environment Variables
    	- Edit the `Path`
