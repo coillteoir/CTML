@@ -6,17 +6,20 @@
 #include "include/EStack.h"
 #include "include/Errors.h"
 
+#define VERSION "0.1"
+
 int main(int argc, char **argv)
 {
-	if(strcmp(argv[1], "--version") == 0)
-	{
-		puts("CTML v0.01\nCopyright (C) David Lynch 2022");
-		return 0;
-	}
+    
+  if(strcmp(argv[1], "--version") == 0)
+  {
+    puts("CTML v0.01\nCopyright (C) David Lynch 2022");
+    return 0;
+  }
 
 	FILE * input = fopen(argv[1], "r");
 	FILE * output = NULL;
-	
+
 	if(argc != 2)
 		output = fopen(argv[2], "w+");
 	else
@@ -34,7 +37,7 @@ int main(int argc, char **argv)
 		return 1;
 	}
 
-	compile(input,output);	
+	compile(input,output);
 
 	return 0;
 }

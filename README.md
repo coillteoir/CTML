@@ -40,7 +40,7 @@ If you wish to insert plain text into the document, just ensure it isn't within 
 ```
 
 # Installation
-### Dependencies 
+### Dependencies
 ```
 gcc
 cmake
@@ -48,16 +48,32 @@ git
 ```
 ### Linux
 ```sh
-git clone https://github.com/davidlynch-sd/CTML.git
-cd CTML
+$ git clone https://github.com/davidlynch-sd/CTML.git
+$ cd CTML
 #as root
-make install
+$ make install
 ```
 ### OSX
 ```
 TBD
 ```
 ### Windows
-```
-TBD
-```
+1. Clone CTML Github Repository and compile CTML source code
+	```ps1
+	> git clone https://github.com/davidlynch-sd/CTML.git
+	> cd CTML
+	> gcc -o ./bin/ctml ./src/main.c
+	```
+2. Add a new path to CTML executable in `C:/User/.../CTML/bin/` to your Path system variable
+   <details>
+	 	<summary>How to add a new path to Path system variable</summary>
+
+   	- In windows search, search for `Edit the system environment variables` and open it to enter the System Properties in the Advanced tab
+   	- Open Environment Variables
+   	- Edit the `Path`
+   		- Edit `Path` within User variables for access only to your user
+   		- Edit `Path` within System variables for all users access
+   	- Add 'C:/User/.../CTML/bin/' as a new path
+	 </details>
+
+3.	Verify installation by running `$ CTML` in your terminal
