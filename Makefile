@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS= -Wall -Wextra -o
+CFLAGS= -Wall -Wextra -Werror -o
 OUT=hello.html
 BIN=bin/ctml
 SRC=src/main.c
