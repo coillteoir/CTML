@@ -1,4 +1,5 @@
 CC=gcc
+CFLAGS= -Wall -Wextra -o
 OUT=hello.html
 BIN=bin/ctml
 SRC=src/main.c
@@ -8,18 +9,18 @@ INST=/usr/bin/ctml
 
 
 compile:
-	$(CC) -o $(BIN) $(SRC) 
+	$(CC) $(CFLAGS) $(BIN) $(SRC) 
 
 run:
 	./$(BIN) $(TEST) $(OUT)
 
 both:
-	$(CC) -o $(BIN) $(SRC)  	
+	$(CC) $(CFLAGS) $(BIN) $(SRC)  	
 	$(BIN) $(TEST) $(OUT)
 
 test:
 	$(BRS) $(OUT) &
 
 install:
-	$(CC) -o $(INST) $(SRC)  
+	$(CC) $(CFLAGS) $(INST) $(SRC)  
 

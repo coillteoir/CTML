@@ -8,14 +8,10 @@ void noSpace(char * s, int * len)
 	char * d = s;
 
 	unsigned char isText = 0;
-	unsigned char ignore = 0;
 	int spaces = 0;
 
 	do
 	{
-		if(*d == '\\')
-			ignore = 1;
-
 		if(*(d - 1) == '(')
 		{	
 			isText = 1;
@@ -33,15 +29,13 @@ void noSpace(char * s, int * len)
 			isText = 0;
 		}
 
-
 		while((*d == ' ' && isText == 0) || *d == '\t' || *d == '\n')
 		{	
 			++d;
 			++spaces;
 		}
-		ignore = 0;
 	}
-	while(*s++ = *d++);
+	while((*s++ = *d++));
 	
 	*len -= spaces;
 }
@@ -52,7 +46,7 @@ char *exTag(char * inStr, size_t open, size_t close)
 
 		int index = 0;
 
-		for(int i = open + 1; i < close; i++)
+		for(size_t i = open + 1; i < close; i++)
 		{
 			*(tag + index) = *(inStr + i);
 			index++;
@@ -94,44 +88,57 @@ int compile(FILE * input, FILE * output)
 	
 	/*	Step 3: Count the amount of elements in the source*/
 
-	int openb = 0;
-	int closeb = 0;
-	int openc = 0;
-	int closec = 0;
+	unsigned char ignore = 0;
+	int bracks = 0;
+	int parens = 0;
+	int tcount = 0;
 
 	char *s = srcText-1;
 
 	char currb = 0;
-	char currc = 0;
 
-	int elms = 0;
-	int pairs = 0;
+	/*Ensure parentheses and brackets are matched.*/
 
 	while(*(++s))
 	{
-		if(*s == '(')
+		/*Make sure ignored characters aren't counted */
+
+		if(*s == '\\')
+		{
+			ignore = 1;
+		}
+		
+		if((*s == '(' || *s == ')' || *s == '{'  || *s == '}') && ignore == 1)
+		{
+			ignore = 0;
+		}
+		else if(*s == '(' && ignore == 0)
 		{	
 			currb = '(';
-			openb++;
+			parens++;
+			tcount++;
 		}
-		if(*s == ')' && currb == '(')	
+		else if(*s == ')' && currb == '(' && ignore == 0)	
 		{	
 			currb = 0;
-			closeb++;
+			parens--;
 		}
-		if(*s == '{')	
-			openc++;
-		if(*s == '}')
-			closec++;
-
+		else if(*s == '{' && ignore == 0)	
+		{
+			bracks++;
+		}
+		else if(*s == '}' && ignore == 0)
+		{
+			bracks--;
+		}
 	}
 
-	if(openc != closec)
+	if(parens != 0)
 	{
 		fprintf(stderr, "Fatal: Mismatched brackets in tags");
 		exit(1);
 	}
-	else if(openb != closeb)
+	else if(bracks != 0)
 	{
 		fprintf(stderr, "Fatal: Mismatched curly braces");
 		exit(1);
@@ -139,13 +146,13 @@ int compile(FILE * input, FILE * output)
 
 	/*	Step 4: Extract tags from source */
 
-	EStack s1 = {.max = openc,
+	EStack s1 = {.max = tcount,
 				.size = 0,
 				.elms = 0};
 
 	s1.elms = malloc(sizeof(char*) * s1.max);
 
-	for(int i = 0; i < strlen(srcText); i++)
+	for(size_t i = 0; i < strlen(srcText); i++)
 	{		
 		static int open = 0;
 		static unsigned char inTag = 0;
@@ -192,6 +199,7 @@ int compile(FILE * input, FILE * output)
 	}
 
 	free(srcText);
+	return 0;
 }	
 
 #endif

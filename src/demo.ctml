@@ -20,6 +20,7 @@
 		{
 			(p){Hello\{\}World}
 			(p){Goodbye World}
+			(p){backslash}
 		}
 	}
 }

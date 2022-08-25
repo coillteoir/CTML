@@ -6,14 +6,14 @@
 #include "include/EStack.h"
 #include "include/Errors.h"
 
-#define VERSION "0.1"
+#define VERSION 0.1
 
 int main(int argc, char **argv)
 {
     
   if(strcmp(argv[1], "--version") == 0)
   {
-    puts("CTML v0.01\nCopyright (C) David Lynch 2022");
+    printf("CTML v%0.1f\nCopyright (C) David Lynch 2022",VERSION);
     return 0;
   }
 
