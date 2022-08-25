@@ -10,12 +10,12 @@
 
 int main(int argc, char **argv)
 {
-	if (argc == 1)
-	{
-		fprintf(stdout, "CTML %s\n", VERSION);
-		fputs("Usage: ctml <input.ctml> [output.html]\n", stdout);
-		return 0;
-	}
+    
+  if(strcmp(argv[1], "--version") == 0)
+  {
+    puts("CTML v0.01\nCopyright (C) David Lynch 2022");
+    return 0;
+  }
 
 	FILE * input = fopen(argv[1], "r");
 	FILE * output = NULL;

@@ -1,19 +1,25 @@
-CC=cc
+CC=gcc
 OUT=hello.html
+BIN=bin/ctml
+SRC=src/main.c
+BRS=firefox
+TEST=src/demo.ctml
+INST=/usr/bin/ctml
+
 
 compile:
-	$(CC) -o bin/ctml src/main.c 
+	$(CC) -o $(BIN) $(SRC) 
 
 run:
-	./bin/ctml src/demo.ctml $(OUT)
+	./$(BIN) $(TEST) $(OUT)
 
 both:
-	$(CC) -o bin/ctml src/main.c 	
-	./bin/ctml src/demo.ctml $(OUT)
+	$(CC) -o $(BIN) $(SRC)  	
+	$(BIN) $(TEST) $(OUT)
 
 test:
-	firefox $(OUT) &
+	$(BRS) $(OUT) &
 
 install:
-	$(CC) -o /usr/bin/ctml src/main.c 
+	$(CC) -o $(INST) $(SRC)  
 

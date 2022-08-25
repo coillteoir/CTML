@@ -1,5 +1,5 @@
 #ifndef _ESTACK_C 
-#define _ESTACK_C
+#define _ESTACK_C 1
 
 typedef struct
 {
