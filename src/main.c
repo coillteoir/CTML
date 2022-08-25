@@ -11,11 +11,18 @@
 int main(int argc, char **argv)
 {
     
-  if(strcmp(argv[1], "--version") == 0)
-  {
-    printf("CTML v%0.1f\nCopyright (C) David Lynch 2022",VERSION);
-    return 0;
-  }
+	if(argc == 1)
+	{
+		fputs("Fatal: No input files detected",stderr);
+		return 0;
+	}
+
+
+	if(strcmp(argv[1], "--version") == 0)
+	{
+		printf("CTML v%0.1f\nCopyright (C) David Lynch 2022",VERSION);
+		return 0;
+	}
 
 	FILE * input = fopen(argv[1], "r");
 	FILE * output = NULL;
