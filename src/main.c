@@ -24,6 +24,12 @@ int main(int argc, char **argv)
 		return 0;
 	}
 
+	if(ExtenCheck(argv[1], "ctml") == 1)
+	{
+		fprintf(stderr, "Fatal: CTML input file not detected.\n");
+		exit(1);
+	}
+
 	FILE * input = fopen(argv[1], "r");
 	FILE * output = NULL;
 
