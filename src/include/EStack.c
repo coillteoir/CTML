@@ -18,13 +18,14 @@ void EPush(EStack * s, char * tag, FILE * output)
 	*(s->elms + s->size) = tag;
 	
 	fprintf(output,"<%s>\n",tag);
+	puts("PUSH");
 }
 
 void EPop(EStack * s, FILE * output)
 {
 	for(int i = 0; i < s->size - 1; i++)
 		fprintf(output, "\t");
-
+	
 	if(s->size >= 0)
 	{
 		fprintf(output, "</");
@@ -36,7 +37,12 @@ void EPop(EStack * s, FILE * output)
 			fprintf(output, "%c", *(tag + i));
 		}
 		fprintf(output, ">\n");
-		free(*(s->elms + s->size));
+			
+		printf("POP %d\n",s->size);
+		if(s->size == 1)
+			return;
+		free(tag);
+		
 		s->size--;
 	}
 }

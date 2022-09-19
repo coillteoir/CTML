@@ -7,20 +7,4 @@
 			CTML DEMO
 		}
 	}
-	(header) 
-	{
-		(h1 style="color:red;")
-		{
-			WOOOOO!!!!\(\)\(\)
-		}
-	}
-	(body)
-	{
-		(div)
-		{
-			(p){Hello\{\}World}
-			(p){Goodbye World}
-			(p){backslash}
-		}
-	}
 }

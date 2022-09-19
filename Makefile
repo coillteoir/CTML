@@ -24,3 +24,7 @@ test:
 install:
 	$(CC) $(CFLAGS) $(INST) $(SRC)  
 
+clean:
+	rm *.html
+	rm bin/ctml
+
