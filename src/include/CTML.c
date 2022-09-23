@@ -8,6 +8,7 @@ void noSpace(char * s, int * len)
 	char * d = s;
 
 	unsigned char isText = 0;
+	unsigned char solo = 0;
 	int spaces = 0;
 
 	do
@@ -15,10 +16,15 @@ void noSpace(char * s, int * len)
 		if(*(d - 1) == '(')
 		{	
 			isText = 1;
+			if(*(d - 2) == '%')
+				solo = 1;
+			else
+				solo = 0;
 		}
 		if(*d == ')')
 		{
-			isText = 0;
+			if(solo == 0)
+				isText = 0;
 		}
 		if(*(d - 1) == '{')
 		{

@@ -13,9 +13,10 @@ To define tags we write the name of the tag in opening and closing braces: (tag)
 The opening and closing tags are defined using opening and closing curly braces.<br><br>
 Attributes of tags are simply contained within the tags.<br><br>
 If you wish to insert plain text into the document, just ensure it isn't within a tag.<br><br>
+If you need to use void or solo tags, insert a '%' before the tag and don't include opening or closing curly braces<br><br>
 
 
-**Note:** The compiler will always consider '(' , ')' , '{' and '}' as valid syntax. In order to tell the compiler to read these as plain text, just use a backslash. e.g \\{.
+**Note:** The compiler will always consider '(' , ')' , '{', '}', '%' and '\' as valid syntax. In order to tell the compiler to read these as plain text, just use a backslash. e.g \\{.
 
 ## 'Hello, world!' in CTML
 ```
