@@ -170,7 +170,6 @@ int compile(FILE * input, FILE * output)
 		if(c == '%')
 		{			
 			solo = 1;
-			puts("SOLO");
 		}
 
 		if(c == '(' && ignore == 0)
