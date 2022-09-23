@@ -107,7 +107,7 @@ int compile(FILE * input, FILE * output)
 		{
 			ignore = 1;
 		}
-		
+
 		if((*s == '(' || *s == ')' || *s == '{'  || *s == '}') && ignore == 1)
 		{
 			ignore = 0;
@@ -157,28 +157,42 @@ int compile(FILE * input, FILE * output)
 		static int open = 0;
 		static unsigned char inTag = 0;
 		static unsigned char ignore = 0;
+		static unsigned char solo = 0;
 		static int close = 0;
 	
+		char c = *(srcText + i);
 
-		if(*(srcText + i) == '\\')
+		if(c == '\\')
+		{	
 			ignore = 1;
+		}
 
+		if(c == '%')
+		{			
+			solo = 1;
+			puts("SOLO");
+		}
 
-		if(*(srcText + i) == '(' && ignore == 0)
+		if(c == '(' && ignore == 0)
 		{
 			open = i;
 			inTag = 1;
 		}
-		else if(*(srcText + i) == ')' && ignore == 0)
+		else if(c == ')' && ignore == 0)
 		{
 			close = i;
 			inTag = 0;
+			
+			if(solo == 1)
+			{
+				fprintf(output,"<%s>", exTag(srcText,open,close));
+			}
 		}
-		else if(*(srcText + i) == '{'&& ignore == 0) //if open curly brace is detected then there is a push to the stack
+		else if(c == '{'&& ignore == 0) //if open curly brace is detected then there is a push to the stack
 		{
 			EPush(&s1, exTag(srcText,open,close),output);	
 		}
-		else if(*(srcText + i) == '}' && ignore == 0)//if a closed curly brace is detected then there is a pop from the stack
+		else if(c == '}' && ignore == 0)//if a closed curly brace is detected then there is a pop from the stack
 		{
 			EPop(&s1, output);
 		}
@@ -186,12 +200,12 @@ int compile(FILE * input, FILE * output)
 		{
 			if(inTag == 0)
 			{
-				if(*(srcText + i) == '\\' && ignore)
+				if((c == '\\' && ignore) || (c == '%' && solo))
 					(void)0; //this acts like python's pass 	
 				else
-					fprintf(output,"%c",*(srcText + i)); 
+					fprintf(output,"%c",c); 
 							
-				if(ignore && (*(srcText + i) == '{' || *(srcText + i) == '}' ||*(srcText + i) == '(' || *(srcText + i) ==  ')'))
+				if(ignore && (c == '{' || c == '}' ||c == '(' || c ==  ')'))
 					ignore = 0;
 			}
 		}

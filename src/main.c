@@ -3,7 +3,6 @@
 #include <string.h>
 
 #include "include/CTML.h"
-#include "include/EStack.h"
 #include "include/Errors.h"
 
 #define VERSION 0.1

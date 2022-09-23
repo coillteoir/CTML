@@ -2,9 +2,6 @@
 { 
 	(head)
 	{	
-		(title)
-		{
-			CTML DEMO
-		}
+		%(meta charset="UTF-8")
 	}
 }
