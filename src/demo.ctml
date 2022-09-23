@@ -4,4 +4,9 @@
 	{	
 		%(meta charset="UTF-8")
 	}
+	(body)
+	{
+		%(h1)
+			David is very cool 
+	}
 }
