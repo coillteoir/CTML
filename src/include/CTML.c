@@ -191,11 +191,15 @@ int compile(FILE * input, FILE * output)
 			if(solo == 1)
 			{
 				fprintf(output,"<%s>", exTag(srcText,open,close));
+				solo = 0;
 			}
 		}
 		else if(c == '{'&& ignore == 0) //if open curly brace is detected then there is a push to the stack
 		{
-			EPush(&s1, exTag(srcText,open,close),output);	
+			if(solo == 0)
+			{
+				EPush(&s1, exTag(srcText,open,close),output);	
+			}
 		}
 		else if(c == '}' && ignore == 0)//if a closed curly brace is detected then there is a pop from the stack
 		{

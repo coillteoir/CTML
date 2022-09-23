@@ -1,12 +1,22 @@
-(html) 
-{ 
+%(!DOCTYPE html)
+(html)
+{
 	(head)
-	{	
-	(meta charset="UTF-8")
+	{
+		(title)
+		{
+			Hello world
+		}
 	}
 	(body)
 	{
 		%(h1)
-			David is very cool 
+			Hello solo
+		(div)
+		{
+			%(p)
+				My swag is unfathomable
+			%(p)I can't believe it's not butter
+		}
 	}
 }
