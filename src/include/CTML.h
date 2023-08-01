@@ -4,7 +4,7 @@
 #include "CTML.c"
 
 int compile(FILE *, FILE *);
-void noSpace(char *, int *);
+int noSpace(char *, int);
 char *exTag(char *, size_t, size_t);
 
 #endif

@@ -3,9 +3,9 @@
 
 #include "EStack.h"
 
-void noSpace(char * s, int * len)
+int noSpace(char * string, int len)
 {
-	char * d = s;
+	char * d = string;
 
 	bool isText = 0;
 	bool solo = 0;
@@ -42,9 +42,9 @@ void noSpace(char * s, int * len)
 			++spaces;
 		}
 	}
-	while((*s++ = *d++));
+	while((*string++ = *d++));
 	
-	*len -= spaces;
+	return len - spaces;
 }
 
 char *exTag(char * inStr, size_t open, size_t close)
@@ -64,9 +64,9 @@ char *exTag(char * inStr, size_t open, size_t close)
 
 int compile(FILE * input, FILE * output)
 {
-	/*	Step 1: Extract text from the FILE	*/
+	/*Step 1: Extract text from the FILE	*/
 	
-	/*	1.1 Find length of the file	*/
+	/*1.1 Find length of the file	*/
 	
 	fseek(input, 0, SEEK_END);
 	int flen = ftell(input);
@@ -89,11 +89,11 @@ int compile(FILE * input, FILE * output)
 	for(int i = 1; i < flen; i++)
 		*(srcText + i - 1) = *(srcText + i);
 
-	/*	Step 2: Remove whitespace from source text */
+	/*Step 2: Remove whitespace from source text */
 	
-	noSpace(srcText, &flen);
+	flen = noSpace(srcText, flen);
 	
-	/*	Step 3: Count the amount of elements in the source*/
+	/*Step 3: Count the amount of elements in the source*/
 
 	unsigned char ignore = 0;
 	int bracks = 0;
