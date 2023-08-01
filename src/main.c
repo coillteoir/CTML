@@ -12,7 +12,7 @@ int main(int argc, char **argv)
     
 	if(argc == 1)
 	{
-		fputs("Fatal: No input files detected",stderr);
+		fputs("Fatal: No input files detected\n",stderr);
 		return 0;
 	}
 
