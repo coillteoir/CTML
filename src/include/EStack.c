@@ -8,39 +8,40 @@ typedef struct
 	char **elms;
 }EStack;
 
-void EPush(EStack * s, char * tag, FILE * output)
+void EPush(EStack * stack, char * tag, FILE * output)
 {
-	for(int i = 0; i < s->size; i++)
+	for(int i = 0; i < stack->size; i++)
 		fprintf(output, "\t");
-
-	s->size++;
 	
-	*(s->elms + s->size) = tag;
+	stack->size++;
+	
+	*(stack->elms + stack->size) = tag;
 	
 	fprintf(output,"<%s>\n",tag);
 }
 
-void EPop(EStack * s, FILE * output)
+void EPop(EStack * stack, FILE * output)
 {
-	for(int i = 0; i < s->size - 1; i++)
+	for(int i = 0; i < stack->size - 1; i++)
 		fprintf(output, "\t");
 	
-	if(s->size >= 0)
+	if(stack->size >= 0)
 	{
 		fprintf(output, "</");
 		
-		char *tag = *(s->elms + s->size);
+		char *tag = *(stack->elms + stack->size);
 
 		for(int i = 0; *(tag + i) > 32; i++)
 		{
 			fprintf(output, "%c", *(tag + i));
 		}
+
 		fprintf(output, ">\n");
-			
-		if(s->size == 1)
+
+		if(stack->size == 1)
 			return;
 		free(tag);
-		s->size--;
+		stack->size--;
 	}
 }
 
