@@ -1,6 +1,8 @@
 #ifndef _ESTACK_C 
 #define _ESTACK_C 1
 
+#define TEXT_MIN 32
+
 typedef struct
 {
     int max;
@@ -31,7 +33,7 @@ void EPop(EStack * stack, FILE * output)
     	
     	char *tag = *(stack->elms + stack->size);
 
-    	for(int i = 0; *(tag + i) > 32; i++)
+    	for(int i = 0; *(tag + i) > TEXT_MIN; i++)
     	{
     		fprintf(output, "%c", *(tag + i));
     	}

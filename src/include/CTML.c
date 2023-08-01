@@ -64,15 +64,15 @@ char *exTag(char * inStr, size_t open, size_t close)
 
 int compile(FILE * input, FILE * output)
 {
-    /*Step 1: Extract text from the FILE    */
+    /*Step 1: Extract text from the FILE*/
     
-    /*1.1 Find length of the file    */
+    /*1.1 Find length of the file*/
     
     fseek(input, 0, SEEK_END);
     int flen = ftell(input);
     fseek(input,0,0);
     
-    /*    1.2 Copy text from file into memory    */
+    /*1.2 Copy text from file into memory*/
     
     char * srcText = calloc(flen ,sizeof(char));
     
@@ -119,22 +119,22 @@ int compile(FILE * input, FILE * output)
         {
             ignore = 0;
         }
-        else if(*s == '(' && ignore == 0)
+        else if(*s == '(' &&  !ignore)
         {    
             currb = '(';
             parens++;
             tcount++;
         }
-        else if(*s == ')' && currb == '(' && ignore == 0)    
+        else if(*s == ')' && currb == '(' &&  !ignore)    
         {    
             currb = 0;
             parens--;
         }
-        else if(*s == '{' && ignore == 0)    
+        else if(*s == '{' &&  !ignore)    
         {
             bracks++;
         }
-        else if(*s == '}' && ignore == 0)
+        else if(*s == '}' &&  !ignore)
         {
             bracks--;
         }
@@ -153,9 +153,11 @@ int compile(FILE * input, FILE * output)
 
     /*    Step 4: Extract tags from source */
 
-    EStack s1 = {.max = tcount,
+    EStack s1 = {
+                .max = tcount,
                 .size = 0,
-                .elms = 0};
+                .elms = 0
+    };
 
     s1.elms = malloc(sizeof(char*) * s1.max);
 
