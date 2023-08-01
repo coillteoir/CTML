@@ -7,36 +7,37 @@ void noSpace(char * s, int * len)
 {
 	char * d = s;
 
-	unsigned char isText = 0;
-	unsigned char solo = 0;
+	bool isText = 0;
+	bool solo = 0;
+
 	int spaces = 0;
 
 	do
 	{
 		if(*(d - 1) == '(')
-		{	
-			isText = 1;
+		{
+			isText = true;
 			if(*(d - 2) == '%')
-				solo = 1;
+				solo = true;
 			else
-				solo = 0;
+				solo = false;
 		}
 		if(*d == ')')
 		{
-			if(solo == 0)
-				isText = 0;
+			if(solo == false)
+				isText = false;
 		}
 		if(*(d - 1) == '{')
 		{
-			isText = 1;
+			isText = true;
 		}
 		if(*d == '}')
 		{
-			isText = 0;
+			isText = false;
 		}
 
-		while((*d == ' ' && isText == 0) || *d == '\t' || *d == '\n')
-		{	
+		while((*d == ' ' && isText == false) || *d == '\t' || *d == '\n')
+		{
 			++d;
 			++spaces;
 		}
