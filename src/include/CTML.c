@@ -153,13 +153,13 @@ int compile(FILE * input, FILE * output)
 
     /*    Step 4: Extract tags from source */
 
-    EStack s1 = {
+    EStack stack = {
                 .max = tcount,
                 .size = 0,
                 .elms = 0
     };
 
-    s1.elms = malloc(sizeof(char*) * s1.max);
+    stack.elms = malloc(sizeof(char*) * stack.max);
 
     for(size_t i = 0; i < strlen(srcText); i++)
     {        
@@ -177,7 +177,7 @@ int compile(FILE * input, FILE * output)
         }
 
         if(c == '%')
-        {            
+        {               
             solo = true;
         }
 
@@ -193,6 +193,9 @@ int compile(FILE * input, FILE * output)
             
             if(solo == true)
             {
+                fprintf(output, "\n");
+                for(int i = 0; i < stack.size; i++)
+                    fprintf(output, "\t");
                 fprintf(output,"<%s>", exTag(srcText,open,close));
                 solo = false;
             }
@@ -201,20 +204,18 @@ int compile(FILE * input, FILE * output)
         {
             if(solo == false)
             {
-                EPush(&s1, exTag(srcText,open,close),output);    
+                EPush(&stack, exTag(srcText,open,close),output);    
             }
         }
         else if(c == '}' && ignore == false)//if a closed curly brace is detected then there is a pop from the stack
         {
-            EPop(&s1, output);
+            EPop(&stack, output);
         }
         else
         {
             if(inTag == false)
             {
-                if((c == '\\' && ignore) || (c == '%' && solo))
-                    (void)0; //this acts like python's pass     
-                else
+                if(!((c == '\\' && ignore) || (c == '%' && solo)))
                     fprintf(output,"%c",c); 
                             
                 if(ignore && (c == '{' || c == '}' ||c == '(' || c ==  ')'))

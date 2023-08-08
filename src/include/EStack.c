@@ -12,23 +12,31 @@ typedef struct
 
 void EPush(EStack * stack, char * tag, FILE * output)
 {
+    
+
+    fprintf(output,"\n");
+
     for(int i = 0; i < stack->size; i++)
-    	fprintf(output, "\t");
-    
+        fprintf(output,"\t");
+
     stack->size++;
-    
+
     *(stack->elms + stack->size) = tag;
-    
+
     fprintf(output,"<%s>\n",tag);
+
+    for(int i = 0; i < stack->size; i++)
+        fprintf(output,"\t");
 }
 
 void EPop(EStack * stack, FILE * output)
 {
-    for(int i = 0; i < stack->size - 1; i++)
-    	fprintf(output, "\t");
-    
     if(stack->size >= 0)
     {
+        fprintf(output,"\n");
+        for(int i = 0; i < stack->size - 1; i++)
+            fprintf(output,"\t");
+
     	fprintf(output, "</");
     	
     	char *tag = *(stack->elms + stack->size);
@@ -42,6 +50,7 @@ void EPop(EStack * stack, FILE * output)
 
     	if(stack->size == 1)
     		return;
+
     	free(tag);
     	stack->size--;
     }
