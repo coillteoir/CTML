@@ -43,7 +43,7 @@ int noSpace(char * string, int len)
         }
     }
     while((*string++ = *d++));
-
+    
     return len - spaces;
 }
 
@@ -58,24 +58,24 @@ char *exTag(char * inStr, size_t open, size_t close)
         *(tag + index) = *(inStr + i);
         index++;
     }
-
+   
     return tag;
 }
 
 int compile(FILE * input, FILE * output)
 {
     /*Step 1: Extract text from the FILE*/
-
+    
     /*1.1 Find length of the file*/
-
+    
     fseek(input, 0, SEEK_END);
     int flen = ftell(input);
     fseek(input,0,0);
-
+    
     /*1.2 Copy text from file into memory*/
-
-    char * srcText = calloc(flen,sizeof(char));
-
+    
+    char * srcText = calloc(flen ,sizeof(char));
+    
     char * t = srcText;
 
     for(char c = 0; !feof(input); c = fgetc(input))
@@ -90,9 +90,9 @@ int compile(FILE * input, FILE * output)
         *(srcText + i - 1) = *(srcText + i);
 
     /*Step 2: Remove whitespace from source text */
-
+    
     flen = noSpace(srcText, flen);
-
+    
     /*Step 3: Count the amount of elements in the source*/
 
     unsigned char ignore = 0;
@@ -120,17 +120,17 @@ int compile(FILE * input, FILE * output)
             ignore = 0;
         }
         else if(*s == '(' &&  !ignore)
-        {
+        {    
             currb = '(';
             parens++;
             tcount++;
         }
-        else if(*s == ')' && currb == '(' &&  !ignore)
-        {
+        else if(*s == ')' && currb == '(' &&  !ignore)    
+        {    
             currb = 0;
             parens--;
         }
-        else if(*s == '{' &&  !ignore)
+        else if(*s == '{' &&  !ignore)    
         {
             bracks++;
         }
@@ -154,30 +154,30 @@ int compile(FILE * input, FILE * output)
     /*    Step 4: Extract tags from source */
 
     EStack stack = {
-        .max = tcount,
-        .size = 0,
-        .elms = 0
+                .max = tcount,
+                .size = 0,
+                .elms = 0
     };
 
     stack.elms = malloc(sizeof(char*) * stack.max);
 
     for(size_t i = 0; i < strlen(srcText); i++)
-    {
+    {        
         static int open = 0;
         static int close = 0;
         static bool inTag = false;
         static bool ignore = false;
         static bool solo = false;
-
+    
         char c = *(srcText + i);
 
         if(c == '\\')
-        {
+        {    
             ignore = true;
         }
 
         if(c == '%')
-        {
+        {               
             solo = true;
         }
 
@@ -190,7 +190,7 @@ int compile(FILE * input, FILE * output)
         {
             close = i;
             inTag = false;
-
+            
             if(solo == true)
             {
                 fprintf(output, "\n");
@@ -204,7 +204,7 @@ int compile(FILE * input, FILE * output)
         {
             if(solo == false)
             {
-                EPush(&stack, exTag(srcText,open,close),output);
+                EPush(&stack, exTag(srcText,open,close),output);    
             }
         }
         else if(c == '}' && ignore == false)//if a closed curly brace is detected then there is a pop from the stack
@@ -216,8 +216,8 @@ int compile(FILE * input, FILE * output)
             if(inTag == false)
             {
                 if(!((c == '\\' && ignore) || (c == '%' && solo)))
-                    fprintf(output,"%c",c);
-
+                    fprintf(output,"%c",c); 
+                            
                 if(ignore && (c == '{' || c == '}' ||c == '(' || c ==  ')'))
                     ignore = false;
             }
@@ -226,6 +226,6 @@ int compile(FILE * input, FILE * output)
 
     free(srcText);
     return 0;
-}
+}    
 
 #endif

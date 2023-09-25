@@ -6,11 +6,11 @@ int ExtenCheck(char * file, char * ex)
 
     char * extension = 0;
     while(*++file)
-    {
-        if(*file == '.')
-        {
-            extension = file + 1;
-        }
+    {		
+    	if(*file == '.')
+    	{
+    		extension = file + 1;
+    	}
     }
 
     if(strcmp(extension, ex) == 0) return 0;

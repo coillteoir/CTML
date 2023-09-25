@@ -1,4 +1,4 @@
-#ifndef _ESTACK_C
+#ifndef _ESTACK_C 
 #define _ESTACK_C 1
 
 #define TEXT_MIN 32
@@ -8,10 +8,11 @@ typedef struct
     int max;
     int size;
     char **elms;
-} EStack;
+}EStack;
 
 void EPush(EStack * stack, char * tag, FILE * output)
 {
+    
 
     fprintf(output,"\n");
 
@@ -36,22 +37,22 @@ void EPop(EStack * stack, FILE * output)
         for(int i = 0; i < stack->size - 1; i++)
             fprintf(output,"\t");
 
-        fprintf(output, "</");
+    	fprintf(output, "</");
+    	
+    	char *tag = *(stack->elms + stack->size);
 
-        char *tag = *(stack->elms + stack->size);
+    	for(int i = 0; *(tag + i) > TEXT_MIN; i++)
+    	{
+    		fprintf(output, "%c", *(tag + i));
+    	}
 
-        for(int i = 0; *(tag + i) > TEXT_MIN; i++)
-        {
-            fprintf(output, "%c", *(tag + i));
-        }
+    	fprintf(output, ">\n");
 
-        fprintf(output, ">\n");
+    	if(stack->size == 1)
+    		return;
 
-        if(stack->size == 1)
-            return;
-
-        free(tag);
-        stack->size--;
+    	free(tag);
+    	stack->size--;
     }
 }
 
