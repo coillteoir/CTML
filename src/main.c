@@ -20,7 +20,7 @@ int main(int argc, char **argv)
 
     if(strcmp(argv[1], "--version") == 0)
     {
-    	printf("CTML v%0.1f\nCopyright (C) David Lynch 2022",VERSION);
+    	printf("CTML v%0.1f\nCopyright (C) David Lynch 2022\n",VERSION);
     	return 0;
     }
 
