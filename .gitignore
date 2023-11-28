@@ -1,3 +1,4 @@
 bin/
 *.html
 .vscode/
+**/*.orig
