@@ -3,8 +3,7 @@
 
 #include "EStack.h"
 
-int noSpace(char * string, int len)
-{
+int noSpace(char * string, int len) {
     char * d = string;
 
     bool isText = 0;
@@ -12,49 +11,40 @@ int noSpace(char * string, int len)
 
     int spaces = 0;
 
-    do
-    {
-        if(*(d - 1) == '(')
-        {
+    do {
+        if(*(d - 1) == '(') {
             isText = true;
             if(*(d - 2) == '%')
                 solo = true;
             else
                 solo = false;
         }
-        if(*d == ')')
-        {
+        if(*d == ')') {
             if(solo == false)
                 isText = false;
         }
-        if(*(d - 1) == '{')
-        {
+        if(*(d - 1) == '{') {
             isText = true;
         }
-        if(*d == '}')
-        {
+        if(*d == '}') {
             isText = false;
         }
 
-        while((*d == ' ' && isText == false) || *d == '\t' || *d == '\n')
-        {
+        while((*d == ' ' && isText == false) || *d == '\t' || *d == '\n') {
             ++d;
             ++spaces;
         }
-    }
-    while((*string++ = *d++));
+    } while((*string++ = *d++));
 
     return len - spaces;
 }
 
-char *exTag(char * inStr, size_t open, size_t close)
-{
+char *exTag(char * inStr, size_t open, size_t close) {
     char *tag = calloc(close-open, 1);
 
     int index = 0;
 
-    for(size_t i = open + 1; i < close; i++)
-    {
+    for(size_t i = open + 1; i < close; i++) {
         *(tag + index) = *(inStr + i);
         index++;
     }
@@ -62,8 +52,7 @@ char *exTag(char * inStr, size_t open, size_t close)
     return tag;
 }
 
-int compile(FILE * input, FILE * output)
-{
+char * compile(FILE * input, FILE * output) {
     /*Step 1: Extract text from the FILE*/
 
     /*1.1 Find length of the file*/
@@ -78,8 +67,7 @@ int compile(FILE * input, FILE * output)
 
     char * t = srcText;
 
-    for(char c = 0; !feof(input); c = fgetc(input))
-    {
+    for(char c = 0; !feof(input); c = fgetc(input)) {
         *(t) = c;
         ++t;
     }
@@ -106,47 +94,33 @@ int compile(FILE * input, FILE * output)
 
     /*Ensure parentheses and brackets are matched.*/
 
-    while(*(++s))
-    {
+    while(*(++s)) {
         /*Make sure ignored characters aren't counted */
 
-        if(*s == '\\')
-        {
+        if(*s == '\\') {
             ignore = 1;
         }
 
-        if((*s == '(' || *s == ')' || *s == '{'  || *s == '}') && ignore == 1)
-        {
+        if((*s == '(' || *s == ')' || *s == '{'  || *s == '}') && ignore == 1) {
             ignore = 0;
-        }
-        else if(*s == '(' &&  !ignore)
-        {
+        } else if(*s == '(' &&  !ignore) {
             currb = '(';
             parens++;
             tcount++;
-        }
-        else if(*s == ')' && currb == '(' &&  !ignore)
-        {
+        } else if(*s == ')' && currb == '(' &&  !ignore) {
             currb = 0;
             parens--;
-        }
-        else if(*s == '{' &&  !ignore)
-        {
+        } else if(*s == '{' &&  !ignore) {
             bracks++;
-        }
-        else if(*s == '}' &&  !ignore)
-        {
+        } else if(*s == '}' &&  !ignore) {
             bracks--;
         }
     }
 
-    if(parens != 0)
-    {
+    if(parens != 0) {
         fprintf(stderr, "Fatal: Mismatched brackets in tags");
         exit(1);
-    }
-    else if(bracks != 0)
-    {
+    } else if(bracks != 0) {
         fprintf(stderr, "Fatal: Mismatched curly braces");
         exit(1);
     }
@@ -161,61 +135,32 @@ int compile(FILE * input, FILE * output)
 
     stack.elms = malloc(sizeof(char*) * stack.max);
 
-    for(size_t i = 0; i < strlen(srcText); i++)
-    {
+    for(size_t i = 0; i < strlen(srcText); i++) {
+
         static int open = 0;
         static int close = 0;
         static bool inTag = false;
         static bool ignore = false;
-        static bool solo = false;
 
         char c = *(srcText + i);
 
-        if(c == '\\')
-        {
+        if(c == '\\') {
             ignore = true;
         }
 
-        if(c == '%')
-        {
-            solo = true;
-        }
-
-        if(c == '(' && ignore == false)
-        {
+        if(c == '(' && ignore == false) {
             open = i;
             inTag = true;
-        }
-        else if(c == ')' && ignore == false)
-        {
+        } else if(c == ')' && ignore == false) {
             close = i;
             inTag = false;
-
-            if(solo == true)
-            {
-                fprintf(output, "\n");
-                for(int i = 0; i < stack.size; i++)
-                    fprintf(output, "\t");
-                fprintf(output,"<%s>", exTag(srcText,open,close));
-                solo = false;
-            }
-        }
-        else if(c == '{'&& ignore == false) //if open curly brace is detected then there is a push to the stack
-        {
-            if(solo == false)
-            {
-                EPush(&stack, exTag(srcText,open,close),output);
-            }
-        }
-        else if(c == '}' && ignore == false)//if a closed curly brace is detected then there is a pop from the stack
-        {
+        } else if(c == '{'&& ignore == false) { //if open curly brace is detected then there is a push to the stack
+            EPush(&stack, exTag(srcText,open,close),output);
+        } else if(c == '}' && ignore == false) { //if a closed curly brace is detected then there is a pop from the stack
             EPop(&stack, output);
-        }
-        else
-        {
-            if(inTag == false)
-            {
-                if(!((c == '\\' && ignore) || (c == '%' && solo)))
+        } else {
+            if(inTag == false) {
+                if(!((c == '\\' && ignore)))
                     fprintf(output,"%c",c);
 
                 if(ignore && (c == '{' || c == '}' ||c == '(' || c ==  ')'))
@@ -224,8 +169,7 @@ int compile(FILE * input, FILE * output)
         }
     }
 
-    free(srcText);
-    return 0;
+    return srcText;
 }
 
 #endif

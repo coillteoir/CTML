@@ -10,13 +10,17 @@
 	}
 	(body)
 	{
-		%(h1)
-			Hello solo
+	    (h1){
+            Hello solo
+        }
 		(div)
 		{
-			%(p)
-				My swag is unfathomable
-			%(p)I can't believe it's not butter
+			(p){	
+                My swag is unfathomable
+            }
+			(p){
+                I can't believe it's not butter
+            }
 		}
 	}
 }

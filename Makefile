@@ -8,7 +8,8 @@ TEST=src/demo.ctml
 INST=/usr/bin/ctml
 
 
-compile:
+build:
+	if [ -d "bin/" ]; then true; else mkdir bin/; fi
 	$(CC) $(CFLAGS) $(BIN) $(SRC) 
 
 run:

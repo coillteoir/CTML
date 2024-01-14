@@ -1,14 +1,11 @@
 #ifndef _ERRORS_C
 #define _ERRORS_C
 
-int ExtenCheck(char * file, char * ex)
-{
+int ExtenCheck(char * file, char * ex) {
 
     char * extension = 0;
-    while(*++file)
-    {
-        if(*file == '.')
-        {
+    while(*++file) {
+        if(*file == '.') {
             extension = file + 1;
         }
     }
