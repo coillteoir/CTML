@@ -35,11 +35,13 @@ int main(int argc, char **argv) {
 
     if(!input) {
         fputs("Fatal : Input file cannot be opened\n",stderr);
+        fclose(output);
         return 1;
     }
 
     if(!output) {
         fputs("Fatal : Output file cannot be created\n",stderr);
+        fclose(input);
         return 1;
     }
 

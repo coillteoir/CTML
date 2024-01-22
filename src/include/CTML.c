@@ -7,21 +7,11 @@ int noSpace(char * string, int len) {
     char * d = string;
 
     bool isText = 0;
-    bool solo = 0;
-
     int spaces = 0;
 
     do {
         if(*(d - 1) == '(') {
             isText = true;
-            if(*(d - 2) == '%')
-                solo = true;
-            else
-                solo = false;
-        }
-        if(*d == ')') {
-            if(solo == false)
-                isText = false;
         }
         if(*(d - 1) == '{') {
             isText = true;
@@ -133,7 +123,7 @@ char * compile(FILE * input, FILE * output) {
         .elms = 0
     };
 
-    stack.elms = malloc(sizeof(char*) * stack.max);
+    stack.elms = calloc(stack.max, sizeof(char*));
 
     for(size_t i = 0; i < strlen(srcText); i++) {
 

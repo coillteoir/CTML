@@ -32,7 +32,7 @@ void EPop(EStack * stack, FILE * output) {
         fprintf(output,"\n");
         for(int i = 0; i < stack->size - 1; i++)
             fprintf(output,"    ");
-         
+
         fprintf(output, "</");
 
         char *tag = *(stack->elms + stack->size);
@@ -40,7 +40,7 @@ void EPop(EStack * stack, FILE * output) {
         for(int i = 0; *(tag + i) > MIN_ASCII; i++) {
             fprintf(output, "%c", *(tag + i));
         }
-        
+
         fprintf(output, ">\n");
 
         if(stack->size == 1)
